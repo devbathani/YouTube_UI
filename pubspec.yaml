@@ -64,6 +64,22 @@ flutter:
     - images/youtube.png
     - images/profile.jpeg
     - icons/shorts_icon.png
+    - images/4bit.jpeg
+    - images/python.jpeg
+    - images/reboot.jpeg
+    - images/tele.jpeg
+    - images/world chat.jpeg
+    - images/1.gif
+    - images/1_profile.jpeg
+    - images/2.gif
+    - images/2_profile.jpeg
+    - images/3.gif
+    - images/3_profile.jpeg
+    - images/4.gif
+    - images/4_profile.jpeg
+    - images/5.gif
+    - images/5_profile.jpeg
+    - images/figma.jpeg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

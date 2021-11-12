@@ -35,11 +35,10 @@ class BottomBar extends StatelessWidget {
             ],
           ),
           child: Center(
-            child: IconButton(
-              icon: const Icon(Icons.home),
+            child: Icon(
+              Icons.home,
               color: Colors.white,
-              iconSize: screenW / 16,
-              onPressed: () {},
+              size: screenW / 15,
             ),
           ),
         ),
@@ -93,11 +92,10 @@ class BottomBar extends StatelessWidget {
             ],
           ),
           child: Center(
-            child: IconButton(
-              icon: const Icon(Icons.add_circle_outline_sharp),
-              iconSize: screenW / 10,
+            child: Icon(
+              Icons.add_circle_outline,
               color: Colors.white,
-              onPressed: () {},
+              size: screenW / 10,
             ),
           ),
         ),
@@ -123,11 +121,10 @@ class BottomBar extends StatelessWidget {
             ],
           ),
           child: Center(
-            child: IconButton(
-              icon: const Icon(Icons.subscriptions_outlined),
-              iconSize: screenW / 16,
+            child: Icon(
+              Icons.subscriptions_outlined,
               color: Colors.white,
-              onPressed: () {},
+              size: screenW / 15,
             ),
           ),
         ),
@@ -153,11 +150,10 @@ class BottomBar extends StatelessWidget {
             ],
           ),
           child: Center(
-            child: IconButton(
-              icon: const Icon(Icons.video_library_outlined),
-              iconSize: screenW / 16,
+            child: Icon(
+              Icons.video_library_outlined,
               color: Colors.white,
-              onPressed: () {},
+              size: screenW / 15,
             ),
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_ui/bars/bottomnavigationbar.dart';
 import 'package:youtube_ui/model/model.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -10,6 +11,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<void> _handleRefresh() async {
+    return await Future.delayed(Duration(seconds: 2));
+  }
+
   List<Content> content = [
     Content(
       image: 'images/1_profile.jpeg',
@@ -75,6 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, inner) => [
           SliverAppBar(
+            elevation: 0.0,
             backgroundColor: Colors.grey.shade800,
             floating: true,
             title: Column(
@@ -188,13 +194,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       child: Center(
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.search,
-                            color: Colors.white,
-                            size: screenW / 18,
-                          ),
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                          size: screenW / 18,
                         ),
                       ),
                     ),
@@ -236,167 +239,161 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
-        body: ListView.builder(
-          itemCount: content.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: screenW / 15),
-              child: Container(
-                height: screenH * 0.375,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade800,
-                  borderRadius: BorderRadius.circular(10),
-                  // boxShadow: [
-                  //   const BoxShadow(
-                  //     color: Colors.black,
-                  //     offset: Offset(4.0, 4.0),
-                  //     spreadRadius: 0.5,
-                  //     blurRadius: 10,
-                  //   ),
-                  //   BoxShadow(
-                  //     color: Colors.grey.shade600,
-                  //     offset: const Offset(-4.0, -4.0),
-                  //     spreadRadius: 0.5,
-                  //     blurRadius: 10,
-                  //   ),
-                  // ],
-                ),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          content[index].image = content[index].gif;
-                          const Duration(seconds: 2);
-                        });
-                      },
-                      child: Container(
-                        height: screenH * 0.28,
-                        width: double.infinity,
-                        child: Image.asset(
-                          content[index].image,
-                          fit: BoxFit.cover,
+        body: LiquidPullToRefresh(
+          onRefresh: _handleRefresh,
+          color: Colors.red,
+          height: 100,
+          borderWidth: 2.0,
+          showChildOpacityTransition: true,
+          backgroundColor: Colors.grey.shade800,
+          child: ListView.builder(
+            itemCount: content.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: screenW / 15),
+                child: Container(
+                  height: screenH * 0.375,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade800,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            content[index].image = content[index].gif;
+                            const Duration(seconds: 2);
+                          });
+                        },
+                        child: Container(
+                          height: screenH * 0.28,
+                          width: double.infinity,
+                          child: Image.asset(
+                            content[index].image,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: screenH * 0.02,
-                    ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: screenW / 40),
-                          child: Container(
-                            height: screenH * 0.055,
-                            width: screenW * 0.11,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage(content[index].profileimage),
-                                  fit: BoxFit.cover),
-                              boxShadow: [
-                                const BoxShadow(
-                                  color: Colors.black,
-                                  offset: Offset(4.0, 4.0),
-                                  spreadRadius: 0.5,
-                                  blurRadius: 10,
-                                ),
-                                BoxShadow(
-                                  color: Colors.grey.shade600,
-                                  offset: const Offset(-4.0, -4.0),
-                                  spreadRadius: 0.5,
-                                  blurRadius: 10,
-                                ),
-                              ],
+                      SizedBox(
+                        height: screenH * 0.02,
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: screenW / 40),
+                            child: Container(
+                              height: screenH * 0.055,
+                              width: screenW * 0.11,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage(content[index].profileimage),
+                                    fit: BoxFit.cover),
+                                boxShadow: [
+                                  const BoxShadow(
+                                    color: Colors.black,
+                                    offset: Offset(4.0, 4.0),
+                                    spreadRadius: 0.5,
+                                    blurRadius: 10,
+                                  ),
+                                  BoxShadow(
+                                    color: Colors.grey.shade600,
+                                    offset: const Offset(-4.0, -4.0),
+                                    spreadRadius: 0.5,
+                                    blurRadius: 10,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: screenW * 0.015,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              content[index].topic,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: screenW / 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: screenH * 0.005,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  content[index].name,
-                                  style: TextStyle(
-                                    color: Colors.white38,
-                                    fontSize: screenW / 25,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: screenW * 0.01,
-                                ),
-                                Text(
-                                  '.',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: screenW / 25,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: screenW * 0.01,
-                                ),
-                                Text(
-                                  content[index].views,
-                                  style: TextStyle(
-                                    color: Colors.white38,
-                                    fontSize: screenW / 25,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: screenW * 0.01,
-                                ),
-                                Text(
-                                  '.',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: screenW / 25,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: screenW * 0.01,
-                                ),
-                                Text(
-                                  content[index].uploadtime,
-                                  style: TextStyle(
-                                    color: Colors.white38,
-                                    fontSize: screenW / 25,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.more_vert_rounded,
-                            color: Colors.white,
-                            size: screenW / 18,
+                          SizedBox(
+                            width: screenW * 0.015,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                content[index].topic,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: screenW / 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: screenH * 0.005,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    content[index].name,
+                                    style: TextStyle(
+                                      color: Colors.white38,
+                                      fontSize: screenW / 25,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: screenW * 0.01,
+                                  ),
+                                  Text(
+                                    '.',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: screenW / 25,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: screenW * 0.01,
+                                  ),
+                                  Text(
+                                    content[index].views,
+                                    style: TextStyle(
+                                      color: Colors.white38,
+                                      fontSize: screenW / 25,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: screenW * 0.01,
+                                  ),
+                                  Text(
+                                    '.',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: screenW / 25,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: screenW * 0.01,
+                                  ),
+                                  Text(
+                                    content[index].uploadtime,
+                                    style: TextStyle(
+                                      color: Colors.white38,
+                                      fontSize: screenW / 25,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.more_vert_rounded,
+                              color: Colors.white,
+                              size: screenW / 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
